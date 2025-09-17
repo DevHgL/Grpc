@@ -6,8 +6,7 @@ import warnings
 from . import pubsub_pb2 as pubsub__pb2
 
 
-
-GRPC_GENERATED_VERSION = '1.74.0'
+GRPC_GENERATED_VERSION = '1.75.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -52,15 +51,13 @@ class PubSubServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Subscribe(self, request, context):
-        """Assina um tópico e recebe um stream de mensagens
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Publish(self, request, context):
-        """Publica uma mensagem em um tópico
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
