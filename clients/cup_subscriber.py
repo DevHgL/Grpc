@@ -9,9 +9,11 @@ def format_event(event):
 
     if etype == "MATCH_START":
         return f"🏆 Início de {event['round']}: {event['fixture']}"
-
+    
     if etype == "GOAL":
-        return f"⚽ {event['minute']}' – GOL do {event['scorer_team']}! Placar: {event['score']}"
+        scorer = event.get("scorer", "")
+        return f"⚽ {event['minute']}' – GOL do {event['scorer_team']}! ({scorer}) Placar: {event['score']}"
+
 
     if etype == "RED_CARD":
         return f"🟥 {event['minute']}' – Cartão VERMELHO para {event['team']}"
