@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações de Jogos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-8 text-green-400">Notificações em Tempo Real</h1>
+
+        <div id="notifications-container" class="bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
+            <p class="text-gray-400 text-center">Aguardando notificações...</p>
+            <!-- As notificações serão inseridas aqui -->
+        </div>
+    </div>
+
+    <script>
+        const notificationsContainer = document.getElementById('notifications-container');
+        const eventSource = new EventSource("/events");
+
+        let isFirstNotification = true;
+
+        eventSource.onmessage = function(event) {
+            if (isFirstNotification) {
+                notificationsContainer.innerHTML = ''; // Limpa a mensagem "Aguardando..."
+                isFirstNotification = false;
+            }
+
+            const notificationElement = document.createElement('div');
+            notificationElement.className = 'bg-gray-700 p-4 rounded-md mb-4 animate-pulse-once'; // Animação simples
+            notificationElement.textContent = event.data;
+            
+            // Adiciona a nova notificação no topo
+            notificationsContainer.insertBefore(notificationElement, notificationsContainer.firstChild);
+        };
+
+        eventSource.onerror = function(err) {
+            console.error("EventSource failed:", err);
+            const errorElement = document.createElement('p');
+            errorElement.className = 'text-red-500 text-center';
+            errorElement.textContent = 'Erro de conexão com o servidor. Tentando reconectar...';
+            
+            if(isFirstNotification) {
+                notificationsContainer.innerHTML = '';
+                isFirstNotification = false;
+            }
+            notificationsContainer.appendChild(errorElement);
+        };
+
+    </script>
+
+    <style>
+        @keyframes pulse-once {
+            0% { background-color: #4A5568; } /* bg-gray-700 */
+            50% { background-color: #2D3748; } /* bg-gray-800 */
+            100% { background-color: #4A5568; } /* bg-gray-700 */
+        }
+        .animate-pulse-once {
+            animation: pulse-once 1s ease-in-out;
+        }
+    </style>
+
+</body>
+</html>
