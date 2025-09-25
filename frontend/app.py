@@ -45,8 +45,8 @@ async def grpc_subscriber():
         try:
             async with grpc.aio.insecure_channel('localhost:50051') as channel:
                 stub = pubsub_pb2_grpc.PubSubStub(channel)
-                request = pubsub_pb2.SubscribeRequest(topic="brasileirao/serie-a/live", client_id="frontend")
-                print("[Frontend] Assinando tópico 'brasileirao/serie-a/live' no broker gRPC...")
+                request = pubsub_pb2.SubscribeRequest(topic="brasileirao/copa/live", client_id="frontend")
+                print("[Frontend] Assinando tópico 'brasileirao/copa/live' no broker gRPC...")
                 async for message in stub.Subscribe(request):
                     print("[Debug] Mensagem recebida do gRPC.")
                     try:
